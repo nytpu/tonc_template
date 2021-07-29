@@ -1,5 +1,10 @@
 # tonc-template
 
+**THIS IS A MIRROR OF <https://git.sr.ht/~nytpu/tonc-template>!**  I *will not*
+respond to pull requests or issues here.  See [Contributing](#contributing) for
+details on how to contribute, and <https://git.sr.ht/~nytpu/tonc-template> for
+the canonical source.
+
 This template is designed to be used to create gba homebrew using the Tonc
 Library.  The template is written from scratch and is designed to be
 self-contained (other than devkitPro) and easy to understand and modify.
