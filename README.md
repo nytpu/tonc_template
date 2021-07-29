@@ -38,8 +38,13 @@ automatically done most of the time).  You can also set $`CFLAGS`, $`ASFLAGS`,
 and $`LDFLAGS` to add additional flags to the C compiler, assembler, and
 linker, respectively.
 
+Then run:
+
     ./configure
     make
+
+and the ROM will be output as `tonc-template.gba` (or `PROGNAME.gba` if you
+changed $`PROGNAME` in the `Makefile`)
 
 
 ### Modifying
@@ -52,8 +57,9 @@ the `Makefile`.
 
 You can include `<tonc.h>` to get libtonc functions and `"gbfs.h"` to get GBFS
 functions.  Also included is a modified version of my own
-[libmisc](https://git.sr.ht/~nytpu/libmisc) that provides some useful functions
-(notably an arena allocator and string utilities).
+[libmisc](https://git.sr.ht/~nytpu/libmisc) that provides some useful
+functions; notably an arena allocator (`arena.h`) and string utilities
+(`string_util.h`).
 
 
 ## Contributing
@@ -70,14 +76,15 @@ Send suggestions, bugs, and other contributions to
 Copyright (c) 2021 nytpu <alex [at] nytpu.com>
 
 Licensed under the Boost Software License, version 1.0.  You can view a copy of
-the Boost Software License in [LICENSE](LICENSE) or at
+the Boost Software License in [`LICENSE`](LICENSE) or at
 <https://www.boost.org/LICENSE_1_0.txt>.
 
 This repository contains [libmisc](https://git.sr.ht/~nytpu/libmisc), which is
 also licensed under the terms of the Boost Software License, version 1.0.
 
-This repository contains libgbfs.  libgbfs is Copyright 2002 Damian Yerrick and
-is licensed under the terms of the MIT license.  See the header of
-[`gbfs.h`](gbfs.h) for a full copy of the license.
+This repository contains [GBFS](https://pineight.com/gba/#gbfs).  GBFS is
+Copyright 2002 Damian Yerrick and is licensed under the terms of the MIT
+license.  See the [header of `gbfs.h`](gbfs.h#L4-24) for a full copy of the
+license.
 
-All credit for tonclib goes to cearn.
+All credit for [tonc](https://www.coranac.com/projects/tonc/) goes to cearn.
