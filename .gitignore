@@ -1,0 +1,7 @@
+*.gba
+*.elf
+*.gbfs
+*.pal.bin
+*.img.bin
+*.o
+/config.mk
