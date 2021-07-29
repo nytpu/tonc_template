@@ -32,16 +32,18 @@
 .SUFFIXES:
 
 ## program info
-PROGNAME = tonc-template # CHANGE ME
+# CHANGE ME!
+PROGNAME = tonc-template
 
 
 ## compilation flags
 ARCH    = -mthumb -mthumb-interwork
-CFLAGS  = -g -Wall -Wextra -Wfatal-errors -O3 \
+# when developing, it's recommended to set -Og -g when configuring
+CFLAGS  = -I. -Ilibmisc -Wall -Wextra -Wfatal-errors -O3 \
 	-mcpu=arm7tdmi -mtune=arm7tdmi $(ARCH) -Wno-missing-field-initializers \
 	-Wno-unused-parameter -Werror=return-type
 ASFLAGS = -g $(ARCH)
-LDFLAGS = -g $(ARCH)
+LDFLAGS = -Llibmisc -g $(ARCH)
 LDLIBS  = -ltonc -lmisc
 
 # configure options to modify flags
@@ -50,10 +52,13 @@ include config.mk
 
 ## artifacts to build
 # C source files to build, with .o extension
-OBJS = main.o gbfs.o
+OBJS = main.o libgbfs.o
 # Files to include in the GBFS bin
-GBFSFILES =
-# Files to convert from .ase to .png
+GBFSFILES = $(PNGFILES)
+# Files to convert from .png to .bin via grit -ff.  Unfortunately each png file
+# must be duplicated, as "filename.pal.bin", "filename.img.bin", and
+# "filename.map.bin".  If you're using shared palettes or tilesets then you
+# only need to add "shared.pal.bin" and/or "filename.img.bin".
 PNGFILES =
 
 
@@ -87,19 +92,22 @@ $(OBJS): config.mk Makefile
 
 
 
-$(PROGNAME).gba: $(PROGNAME).elf $(PROGNAME).gbfs libmisc/libmisc.a
+# UNCOMMENT "$(PROGNAME).gbfs" and "cat ..." if you want to include a GBFS
+# bundle in your game!
+$(PROGNAME).gba: $(PROGNAME).elf #$(PROGNAME).gbfs
 	printf 'Finalizing ROM\t$@\n'
 	$(OBJCOPY) -O binary $< $@
 	$(GBAFIX) $@
 	$(PADBIN) 256 $@
-	cat $(PROGNAME).gbfs >> $@
+	#cat $(PROGNAME).gbfs >> $@
 
-$(PROGNAME).elf: $(OBJS)
+$(PROGNAME).elf: $(OBJS) libmisc/libmisc.a
 	printf 'Linking\t\t$@\n'
 	$(CC) $(LDFLAGS) -specs=gba.specs $(OBJS) $(LDLIBS) -o $@
 
 $(PROGNAME).gbfs: $(GBFSFILES)
 	printf 'Archiving GBFS\t$@\n'
+	touch $@
 	$(GBFS) $@ $(GBFSFILES)
 
 libmisc/libmisc.a:
