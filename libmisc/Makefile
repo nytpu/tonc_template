@@ -38,15 +38,11 @@ PROGNAME = libmisc
 CC = cc
 AR = ar
 
-## default compilation flags
-CFLAGS  = -Wall -Wextra -pedantic -Wfatal-errors -std=c99 -O3 -I. \
-	-Wno-missing-field-initializers -Wno-unused-parameter -Werror=return-type
-
+CFLAGS =
 
 ## files & dependencies
 LIBS = $(PROGNAME).a
-OBJS = arena.o err.o string_util.o
-TESTS = arena.t string_util.t
+OBJS = arena.o string_util.o
 
 include config.mk
 
@@ -57,7 +53,6 @@ all: $(LIBS)
 
 ## dependencies
 arena.o: arena.h
-err.o: err.h
 string_util.o: string_util.h
 $(OBJS): config.mk Makefile
 
@@ -76,33 +71,6 @@ $(PROGNAME).a: $(OBJS)
 ## phonies
 # technically .PHONY isn't POSIX, but targets with a leading period aren't
 # reserved so it's still valid, it'd just be useless to actually execute
-.PHONY: all clean scan test-includes
+.PHONY: all clean
 clean:
 	rm -rf $(OBJS) $(LIBS) $(TESTS)
-
-# requires clang's scan-build
-# https://clang-analyzer.llvm.org/
-scan:
-	printf 'Cleaning build directory and re-running make with scan-build'
-	make clean
-	scan-build make
-
-# requires include-what-you-use
-# https://github.com/include-what-you-use/include-what-you-use
-test-includes:
-	find . -type f \( -name "*.c" -o -name "*.h" \) -not -path './.ccls-cache/*'\
-		-exec include-what-you-use -Xiwyu --quoted_includes_first ${CFLAGS} {} \;
-
-
-## testing
-$(TESTS): testing.h
-
-.PHONY: test
-.SUFFIXES: .t .c
-.c.t:
-	printf 'Compiling test\t$<\n'
-	$(CC) $(CFLAGS) -DTEST $(LDFLAGS) -o $@ $<
-
-test: $(TESTS)
-	printf 'Running tests:\n'
-	set -e; $(TESTS:%=./%;)
