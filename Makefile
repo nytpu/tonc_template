@@ -4,7 +4,7 @@
 #
 # Copyright (c) 2021 nytpu <alex [at] nytpu.com>
 # SPDX-License-Identifier: BSL-1.0
-# The orginal source for this file is available at <https://git.sr.ht/~nytpu/genc>.
+# The orginal source for this file is available at <https://git.sr.ht/~nytpu/tonc-template>.
 #
 # Permission is hereby granted, free of charge, to any person or organization
 # obtaining a copy of the software and accompanying documentation covered by
