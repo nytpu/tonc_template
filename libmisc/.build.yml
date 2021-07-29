@@ -1,0 +1,13 @@
+image: alpine/edge
+packages:
+  - make
+sources:
+  - https://git.sr.ht/~nytpu/libmisc
+tasks:
+  - build: |
+      cd libmisc
+      ./configure
+      make
+  - test: |
+      cd libmisc
+      make test

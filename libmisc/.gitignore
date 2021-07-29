@@ -1,0 +1,4 @@
+*.o
+*.t
+/config.mk
+/libmisc.a

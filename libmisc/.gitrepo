@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = https://git.sr.ht/~nytpu/libmisc
+	branch = master
+	commit = 815ed881e4b1f9f416377749dd098019bce89215
+	parent = 95218de847c0895e7eb5d14785e1d9e99014f0db
+	method = merge
+	cmdver = 0.4.3
